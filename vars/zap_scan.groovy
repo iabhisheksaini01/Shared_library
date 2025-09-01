@@ -15,10 +15,10 @@ def runZapScan(String targetUrl, String reportName = "results.html", int port = 
         ZAP_DIR=\$(ls -d ZAP_* | head -n 1)
         echo "Using \$ZAP_DIR"
 
-        \${WORKSPACE}/\$ZAP_DIR/zap.sh \
+        "\${WORKSPACE}/\$ZAP_DIR/zap.sh" \
             -cmd -port ${port} \
-            -quickurl ${targetUrl} \
-            -quickout \${WORKSPACE}/${reportName}
+            -quickurl "${targetUrl}" \
+            -quickout "\${WORKSPACE}/${reportName}"
     """
 }
 
