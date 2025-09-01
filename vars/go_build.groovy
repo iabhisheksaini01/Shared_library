@@ -1,4 +1,3 @@
-
 def compile(String binaryName = 'employee-api', String mainFile = 'main.go') {
     sh 'go mod tidy'
     sh "go build -o ${binaryName} ${mainFile}"
