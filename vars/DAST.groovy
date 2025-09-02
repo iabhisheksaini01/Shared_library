@@ -1,4 +1,9 @@
-def runZapScan(String targetUrl, String reportName = 'results.html', String zapPath = '/usr/local/bin/zap.sh', int port = 8082) {
+def runZapScan(Map args = [:]) {
+    String targetUrl = args.get('targetUrl')
+    String reportName = args.get('reportName', 'results.html')
+    int port = args.get('port', 8082)
+    String zapPath = args.get('zapPath', '/usr/local/bin/zap.sh')
+
     sh """
         echo "Using ZAP at ${zapPath}"
 
@@ -9,23 +14,36 @@ def runZapScan(String targetUrl, String reportName = 'results.html', String zapP
     """
 }
 
-def archiveReport(String reportName = 'results.html') {
+def archiveReport(Map args = [:]) {
+    String reportName = args.get('reportName', 'results.html')
     archiveArtifacts artifacts: reportName
 }
 
-def sendMail(boolean success, String reportName = 'results.html', String recipient) {
+def sendMail(Map args = [:]) {
+    boolean success = args.get('success', false)
+    String reportName = args.get('reportName', 'results.html')
+    String recipient = args.get('recipient')
+
     if (success) {
         emailext(
             to: recipient,
             subject: "ZAP Scan SUCCESS: ${currentBuild.fullDisplayName}",
-            body: "Scan completed successfully. See attached report.",
+            body: """Hello,  
+
+The ZAP scan has completed successfully.  
+HTML report is attached for details.  
+""",
             attachmentsPattern: reportName
         )
     } else {
         emailext(
             to: recipient,
             subject: "ZAP Scan FAILED: ${currentBuild.fullDisplayName}",
-            body: "Scan failed. Check console logs."
+            body: """Hello,  
+
+The ZAP scan has failed.  
+Please check the Jenkins console log for more details.  
+"""
         )
     }
 }
