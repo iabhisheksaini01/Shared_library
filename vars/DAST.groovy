@@ -1,3 +1,10 @@
+// vars/DAST.groovy
+
+// Optional: default call
+def call() {
+    echo "DAST library loaded"
+}
+
 def runZapScan(Map args = [:]) {
     String targetUrl = args.get('targetUrl')
     String reportName = args.get('reportName', 'results.html')
