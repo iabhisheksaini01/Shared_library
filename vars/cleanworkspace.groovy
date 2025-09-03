@@ -1,1 +1,3 @@
-
+def cleanWorkspace() {
+    cleanWs()
+}
