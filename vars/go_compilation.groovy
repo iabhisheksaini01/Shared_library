@@ -7,6 +7,11 @@ def compile(String binaryName, String mainFile) {
     sh "go build -o ${binaryName} ${mainFile}"
 }
 
+def checkout(String REPO_URL, String BRANCH_NAME = 'main') {
+    git url: REPO_URL, branch: BRANCH_NAME
+}
+
+
 def sendMail(boolean success, String recipientEmail) {
     if (success) {
         emailext(
