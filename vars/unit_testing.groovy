@@ -1,3 +1,7 @@
+def cleanWorkspace() {
+    cleanWs()
+}
+
 def runTests() {
     sh 'mvn test'
 }
@@ -11,12 +15,12 @@ def archiveReports() {
     archiveArtifacts artifacts: 'target/**/*.jar, target/surefire-reports/*.*', fingerprint: true
 }
 
-def sendMail(boolean success) {
+def sendMail(boolean success, String recipientEmail) {
     if (success) {
         emailext(
-            to: 'sainiabhishek619@gmail.com',
+            to: recipientEmail,
             subject: "Build SUCCESS: ${currentBuild.fullDisplayName}",
-            body: """Hello Abhishek,  
+            body: """Hello,  
 
 Your build has completed successfully.  
 Please find the attached HTML test report for details.""",
@@ -24,9 +28,9 @@ Please find the attached HTML test report for details.""",
         )
     } else {
         emailext(
-            to: 'sainiabhishek619@gmail.com',
+            to: recipientEmail,
             subject: "Build FAILED: ${currentBuild.fullDisplayName}",
-            body: """Hello Abhishek,  
+            body: """Hello,  
 
 Your build has failed.  
 Logs and test report (if available) are attached for review.""",
