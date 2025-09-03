@@ -17,26 +17,25 @@ def archiveReports() {
     archiveArtifacts artifacts: 'results.html'
 }
 
-
 def sendMail(boolean success, String recipientEmail) {
     if (success) {
         emailext(
             to: recipientEmail,
             subject: "Build SUCCESS: ${currentBuild.fullDisplayName}",
-            body: """Hello,  
+            body: """Hello,
 
-Your build has completed successfully.  
+Your build has completed successfully.
 Please find the attached HTML test report for details.""",
-            aattachmentsPattern: 'results.html'
+            attachmentsPattern: 'results.html'
         )
     } else {
         emailext(
             to: recipientEmail,
             subject: "Build FAILED: ${currentBuild.fullDisplayName}",
-            body: """Hello Abhishek,  
+            body: """Hello Abhishek,
 
-The ZAP scan has failed.  
-Please check the Jenkins console log for more details.
+The ZAP scan has failed.
+Please check the Jenkins console log for more details.""",
             attachLog: true,
             attachmentsPattern: 'results.html'
         )
