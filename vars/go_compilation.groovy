@@ -7,8 +7,8 @@ def compile(String binaryName, String mainFile) {
     sh "go build -o ${binaryName} ${mainFile}"
 }
 
-def checkout(String REPO_URL, String BRANCH_NAME = 'main') {
-    git url: REPO_URL, branch: BRANCH_NAME
+def checkout(String REPO_URL, String BRANCH_NAME = 'main', String credentialsId = null) {
+    git url: REPO_URL, branch: BRANCH_NAME, credentialsId: credentialsId
 }
 
 
