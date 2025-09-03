@@ -27,18 +27,18 @@ def sendMail(boolean success, String recipientEmail) {
 
 Your build has completed successfully.  
 Please find the attached HTML test report for details.""",
-            attachmentsPattern: 'target/site/surefire-report.html'
+            aattachmentsPattern: 'results.html'
         )
     } else {
         emailext(
             to: recipientEmail,
             subject: "Build FAILED: ${currentBuild.fullDisplayName}",
-            body: """Hello,  
+            body: """Hello Abhishek,  
 
-Your build has failed.  
-Logs and test report (if available) are attached for review.""",
+The ZAP scan has failed.  
+Please check the Jenkins console log for more details.
             attachLog: true,
-            attachmentsPattern: 'target/site/surefire-report.html'
+            attachmentsPattern: 'results.html'
         )
     }
 }
