@@ -14,7 +14,7 @@ def runZapScan(String TARGET_URL, String REPORT_NAME, int ZAP_PORT, String ZAP_P
 }
 
 def archiveReports() {
-    archiveArtifacts artifacts: 'results.html'
+    archiveArtifacts artifacts: 'zap-report.html'
 }
 
 def sendMail(boolean success, String recipientEmail) {
@@ -26,7 +26,7 @@ def sendMail(boolean success, String recipientEmail) {
 
 Your build has completed successfully.
 Please find the attached HTML test report for details.""",
-            attachmentsPattern: 'results.html'
+            attachmentsPattern: 'zap-report.html'
         )
     } else {
         emailext(
