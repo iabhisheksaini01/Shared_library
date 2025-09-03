@@ -2,14 +2,14 @@ def cleanWorkspace() {
     cleanWs()
 }
 
-def runZapScan(String targetUrl, String reportName, int port, String zapPath) {
+def runZapScan(String TARGET_URL, String REPORT_NAME, int ZAP_PORT, String ZAP_PATH) {
     sh """
-        echo "Using ZAP at ${zapPath}"
+        echo "Using ZAP at ${ZAP_PATH}"
 
-        "${zapPath}" \
-            -cmd -port ${port} \
-            -quickurl "${targetUrl}" \
-            -quickout "\${WORKSPACE}/${reportName}"
+        "${ZAP_PATH}" \
+            -cmd -port ${ZAP_PORT} \
+            -quickurl "${TARGET_URL}" \
+            -quickout "\${WORKSPACE}/${REPORT_NAME}"
     """
 }
 
