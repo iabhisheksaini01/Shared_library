@@ -13,21 +13,21 @@ def runZapScan(String TARGET_URL, String REPORT_NAME, int ZAP_PORT, String ZAP_P
     """
 }
 
-def archiveReports(String reportFile = 'results.html') {
-    archiveArtifacts artifacts: reportFile
+def archiveReports() {
+    archiveArtifacts artifacts: 'results.html'
 }
 
-def sendMail(boolean success, String recipientEmail, String reportName = 'results.html') {
+
+def sendMail(boolean success, String recipientEmail) {
     if (success) {
         emailext(
             to: recipientEmail,
             subject: "Build SUCCESS: ${currentBuild.fullDisplayName}",
             body: """Hello,  
 
-The ZAP scan has completed successfully.  
-HTML report is attached for details.  
-""",
-            attachmentsPattern: reportName
+Your build has completed successfully.  
+Please find the attached HTML test report for details.""",
+            attachmentsPattern: 'target/site/surefire-report.html'
         )
     } else {
         emailext(
@@ -35,10 +35,10 @@ HTML report is attached for details.
             subject: "Build FAILED: ${currentBuild.fullDisplayName}",
             body: """Hello,  
 
-The ZAP scan has failed.  
-Please check the Jenkins console log for more details.  
-"""
+Your build has failed.  
+Logs and test report (if available) are attached for review.""",
+            attachLog: true,
+            attachmentsPattern: 'target/site/surefire-report.html'
         )
     }
 }
- 
